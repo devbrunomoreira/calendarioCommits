@@ -27,7 +27,7 @@ export class Graph extends Component {
     await api
       .get("/repos/brunim1101/empresas-bruno/stats/commit_activity")
       .then(res => {
-        res.data.map((item, index) => {
+        res.data.map((item) => {
           weeks.push(item.days);
         });
         this.setState({ data: res.data, loading: false });
@@ -37,12 +37,12 @@ export class Graph extends Component {
             days.push(this.state.weeks[i][j]);
           }
         }
+        this.setState({ max_value: this.findMax() });
       })
       .catch(error => {
         console.log(error);
+        this.setState({loading: false})
       });
-    
-    this.setState({ max_value: this.findMax() });
   }
   rankColor(value) {
     let max = this.state.max_value;
@@ -118,20 +118,21 @@ export class Graph extends Component {
         ) : (
             <div className="table">
               <table>
+                <tbody>
                 <tr>
                   {this.state.data.map((week, index) =>
                     index % 4 === 0 ? (
-                      <th colSpan={this.valueForMonth(index)}>
+                      <th key={index} colSpan={this.valueForMonth(index)}>
                         {this.writeMonth(week.week)}
                       </th>
                     ) : null
                   )}
                 </tr>
                 {this.state.daysOfWeek.map((day, index) => (
-                  <tr>
+                  <tr key={index}>
                     <td>{day}</td>
-                    {this.state.data.map((week, index2) => (
-                      <td>
+                    {this.state.data.map((week,index2) => (
+                      <td key={index2}>
                         <svg width="15" height="15">
                           <Tooltip
                             placement="top"
@@ -157,9 +158,10 @@ export class Graph extends Component {
                     ))}
                   </tr>
                 ))}
+                </tbody>
               </table>
               <div className="subtitle">
-                <p>Less </p>
+                <p>Less &nbsp;</p>
                 <svg width="100px" height="20px">
                   <rect
                     style={{
