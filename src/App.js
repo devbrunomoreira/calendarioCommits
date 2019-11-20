@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import Graph from "./components/Graph";
-import Month from "./components/Month";
 
 function App() {
   return [
