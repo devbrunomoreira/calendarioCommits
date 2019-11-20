@@ -31,16 +31,17 @@ export class Graph extends Component {
           weeks.push(item.days);
         });
         this.setState({ data: res.data, loading: false });
+        for (let i = 0; i < 52; i++) {
+          for (let j = 0; j < 7; j++) {
+            const { days } = this.state;
+            days.push(this.state.weeks[i][j]);
+          }
+        }
       })
       .catch(error => {
         console.log(error);
       });
-    for (let i = 0; i < 52; i++) {
-      for (let j = 0; j < 7; j++) {
-        const { days } = this.state;
-        days.push(this.state.weeks[i][j]);
-      }
-    }
+    
     this.setState({ max_value: this.findMax() });
   }
   rankColor(value) {
