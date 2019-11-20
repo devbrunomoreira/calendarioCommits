@@ -154,6 +154,8 @@ export class Graph extends Component {
                             />
                           </Tooltip>
                         </svg>
+                      </td>
+                    ))}
                   </tr>
                 ))}
                 </tbody>
