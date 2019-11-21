@@ -3,7 +3,7 @@ import "./App.css";
 import Graph from "./components/Graph";
 
 function App() {
-  return [
+  return (
     <div className="App">
       <header className="App-header">
         <Graph />
@@ -12,7 +12,7 @@ function App() {
         
       </div>
     </div>
-  ];
+  );
 }
 
 export default App;
