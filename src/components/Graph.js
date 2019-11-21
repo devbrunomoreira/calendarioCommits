@@ -78,7 +78,6 @@ export class Graph extends Component {
             }
           }
         }
-        console.log(res.data);
         this.setState({ data: res.data, loading: false, maxValue: maxV });
       })
       .catch(error => {
