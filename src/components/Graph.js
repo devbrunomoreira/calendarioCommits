@@ -128,7 +128,7 @@ export class Graph extends Component {
                           key={JSON.stringify(week)}
                           colSpan={valueForMonth(index)}
                         >
-                          {writeMonth(week.week) }
+                          {writeMonth(week.week)}
                         </th>
                       ),
                   )}
