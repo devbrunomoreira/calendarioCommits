@@ -145,7 +145,7 @@ export class Graph extends Component {
                               week.days[index]
                             } Dia: ${handleDate(
                               week.week,
-                              index,
+                              index + 1,
                             ).date()} Mês: ${handleDate(
                               week.week,
                               index,
