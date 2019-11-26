@@ -142,6 +142,7 @@ export class Graph extends Component {
                   {Object.keys(tableMonth).map(key => (
                     <td
                       colSpan={tableMonth[key].length}
+                      key={key}
                     >
                       {writeMonth(key)}
                     </td>
