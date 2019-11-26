@@ -1,8 +1,14 @@
 .container{
+  
+}
+.table{
     display: flex;
+    margin: auto;
+    overflow: visible;
 }
 .subtitle{
     display: flex;
+    flex-direction: row;
     justify-content: flex-end;
     font-size: small;
     align-items: center;

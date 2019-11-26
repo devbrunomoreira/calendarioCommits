@@ -1,5 +1,3 @@
-/* eslint-disable indent */
-/* eslint-disable react/jsx-indent */
 import React, { Component } from 'react';
 import { Tooltip } from '@material-ui/core';
 import moment from 'moment';
@@ -7,52 +5,58 @@ import Loader from 'react-loader-spinner';
 import api from '../services/api';
 import '../assets/styles/Graph.scss';
 
-function writeMonth(weekUnix) {
-  const date = moment.unix(weekUnix);
-  const day = date.add(6, 'days');
-  let month = 0;
-  if (date.month() > day.month()) {
-    month = day.month() + 1;
-  } else month = date.month() + 1;
-  switch (month) {
-    case 1:
-      return 'Jan';
-    case 2:
-      return 'Fev';
-    case 3:
-      return 'Mar';
-    case 4:
-      return 'Abr';
-    case 5:
-      return 'Mai';
-    case 6:
-      return 'Jun';
-    case 7:
-      return 'Jul';
-    case 8:
-      return 'Ago';
-    case 9:
-      return 'Set';
-    case 10:
-      return 'Out';
-    case 11:
-      return 'Nov';
-    case 12:
-      return 'Dez';
-    default:
-      return 'Erro';
+function writeMonth(yearMonth) {
+  const month = yearMonth.split('').splice(5).join();
+  if (month === '1') {
+    return 'Jan';
   }
-}
-function valueForMonth(value) {
-  if (value < 40) {
-    return '4';
+  if (month === '2') {
+    return 'Fev';
   }
-  return '5';
+  if (month === '3') {
+    return 'Mar';
+  }
+  if (month === '4') {
+    return 'Abr';
+  }
+  if (month === '5') {
+    return 'Mai';
+  }
+  if (month === '6') {
+    return 'Jun';
+  }
+  if (month === '7') {
+    return 'Jul';
+  }
+  if (month === '8') {
+    return 'Ago';
+  }
+  if (month === '9') {
+    return 'Set';
+  }
+  if (month === '1,0') {
+    return 'Out';
+  }
+  if (month === '1,1') {
+    return 'Nov';
+  }
+  if (month === '1,2') {
+    return 'Dez';
+  }
+  return 'Erro';
 }
 function handleDate(weekUnixTime, index) {
   const date = moment.unix(weekUnixTime);
   const day = date.add(index, 'days');
   return day;
+}
+function getMonth(weekUnix) {
+  const date = moment.unix(weekUnix);
+  return date.month() + 1;
+}
+function getYear(weekUnix) {
+  const date = moment.unix(weekUnix);
+  return date.year();
 }
 export class Graph extends Component {
   constructor(props) {
@@ -62,15 +66,26 @@ export class Graph extends Component {
       daysOfWeek: ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab'],
       maxValue: 0,
       data: [],
+      tableMonth: [],
     };
   }
 
   async componentDidMount() {
     await api
-      .get('/repos/brunim1101/empresas-bruno/stats/commit_activity')
+      .get('/repos/facebook/react-native/stats/commit_activity')
       .then(res => {
         const newWeeks = res.data.reduce((acc, item) => [...acc, item], []);
         let maxV = 0;
+        const table = [];
+        newWeeks.forEach(week => {
+          const month = getMonth(week.week);
+          const year = getYear(week.week);
+          if (table[`${year}/${month}`]) {
+            table[`${year}/${month}`].push(week);
+          } else {
+            table[`${year}/${month}`] = [week];
+          }
+        });
         for (let i = 0; i < 52; i += 1) {
           for (let j = 0; j < 7; j += 1) {
             if (newWeeks[i].days[j] > maxV) {
@@ -78,10 +93,11 @@ export class Graph extends Component {
             }
           }
         }
-        this.setState({ data: res.data, loading: false, maxValue: maxV });
+        this.setState({
+          data: res.data, loading: false, maxValue: maxV, tableMonth: table,
+        });
       })
-      .catch(error => {
-        console.log(error);
+      .catch(() => {
         this.setState({ loading: false });
       });
   }
@@ -113,25 +129,23 @@ export class Graph extends Component {
     const { loading } = this.state;
     const { daysOfWeek } = this.state;
     const { data } = this.state;
+    const { tableMonth } = this.state;
     return (
       <>
         {loading ? (
           <Loader type="Oval" color="black" height={80} width={80} />
         ) : (
-          <div className="table">
-            <table>
+          <div className="container">
+            <table className="table">
               <tbody>
                 <tr>
-                  {data.map(
-                    (week, index) => index % 4 === 0 && (
-                        <th
-                          key={JSON.stringify(week)}
-                          colSpan={valueForMonth(index)}
-                        >
-                          {writeMonth(week.week)}
-                        </th>
-                      ),
-                  )}
+                  {Object.keys(tableMonth).map(key => (
+                    <td
+                      colSpan={tableMonth[key].length}
+                    >
+                      {writeMonth(key)}
+                    </td>
+                  ))}
                 </tr>
                 {daysOfWeek.map((day, index) => (
                   <tr key={JSON.stringify(day)}>
@@ -148,7 +162,7 @@ export class Graph extends Component {
                               index + 1,
                             ).date()} Mês: ${handleDate(
                               week.week,
-                              index,
+                              index + 1,
                             ).month() + 1}`}
                           >
                             <rect
