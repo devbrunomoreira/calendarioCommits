@@ -179,52 +179,52 @@ export class Graph extends Component {
                   </tr>
                 ))}
               </tbody>
+              <div className="subtitle">
+                <p>Less &nbsp;</p>
+                <svg width="100px" height="20px">
+                  <rect
+                    style={{
+                      fill: '#c6e48b',
+                      width: '15px',
+                      height: '15px',
+                    }}
+                    x="20px"
+                  />
+                  <rect
+                    style={{
+                      fill: '#7bc96f',
+                      width: '15px',
+                      height: '15px',
+                    }}
+                    x="40px"
+                  />
+                  <rect
+                    style={{
+                      fill: '#239a3b',
+                      width: '15px',
+                      height: '15px',
+                    }}
+                    x="60px"
+                  />
+                  <rect
+                    style={{
+                      fill: '#196127',
+                      width: '15px',
+                      height: '15px',
+                    }}
+                    x="80px"
+                  />
+                  <rect
+                    style={{
+                      fill: '#ebedf0',
+                      width: '15px',
+                      height: '15px',
+                    }}
+                  />
+                </svg>
+                <p>More</p>
+              </div>
             </table>
-            <div className="subtitle">
-              <p>Less &nbsp;</p>
-              <svg width="100px" height="20px">
-                <rect
-                  style={{
-                    fill: '#c6e48b',
-                    width: '15px',
-                    height: '15px',
-                  }}
-                  x="20px"
-                />
-                <rect
-                  style={{
-                    fill: '#7bc96f',
-                    width: '15px',
-                    height: '15px',
-                  }}
-                  x="40px"
-                />
-                <rect
-                  style={{
-                    fill: '#239a3b',
-                    width: '15px',
-                    height: '15px',
-                  }}
-                  x="60px"
-                />
-                <rect
-                  style={{
-                    fill: '#196127',
-                    width: '15px',
-                    height: '15px',
-                  }}
-                  x="80px"
-                />
-                <rect
-                  style={{
-                    fill: '#ebedf0',
-                    width: '15px',
-                    height: '15px',
-                  }}
-                />
-              </svg>
-              <p>More</p>
-            </div>
           </div>
         )}
       </>

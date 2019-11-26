@@ -1,15 +1,18 @@
 .container{
-  
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-left: 20vw;
 }
 .table{
     display: flex;
-    margin: auto;
-    overflow: visible;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
 }
 .subtitle{
+    width: inherit;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    font-size: small;
     align-items: center;
 }
